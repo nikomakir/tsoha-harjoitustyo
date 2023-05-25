@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Rekisteröinti</h2>
+
+<form action="/register" method="post">
+Tunnus: <br><input type="text" name="username" minlength="1" maxlength="20">
+<p>
+Salasana: <br><input type="password" name="password1">
+<p>
+Toista salasana: <br><input type="password" name="password2">
+<p>
+Käyttäjärooli:<br>
+<input type="radio" name="role" value=1> Käyttäjä
+<input type="radio" name="role" value=2> Ylläpitäjä
+<p>
+<input type="submit" value="Luo tunnus">
+</form>
+
+<p>
+<a href="/login">Palaa takaisin</a>
+
+{% endblock %}
