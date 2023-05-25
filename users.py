@@ -6,8 +6,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 
 def login(name, password):
-    sql = "SELECT id, password, role FROM users WHERE name=:name"
-    result = db.session.execute(text(sql), {"name":name}).fetchone()
+    sql = "SELECT id, password, role FROM users WHERE username=:username"
+    result = db.session.execute(text(sql), {"username":name}).fetchone()
     if not result:
         return False
     if not check_password_hash(result.password, password):
