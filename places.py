@@ -18,6 +18,10 @@ def add_place(name, address, description):
     db.session.execute(text(sql), {"name":name, "address":address, "description":description})
     db.session.commit()
 
-
-
-
+def add_opening_hours(place_id, weekday, opens, closes):
+    sql = """INSERT INTO openinghours (exerciseplaces_id, weekday, opens, closes)
+            VALUES (exerciseplaces_id:exerciseplaces_id, weekday:weekday, opens:opens,
+             closes:closes)"""
+    db.session.execute(text(sql),
+                       {"exerciseplaces_id":place_id, "weekday":weekday, "opens":opens, "closes": closes})
+    db.session.commit()
