@@ -49,3 +49,22 @@ def get_reviews(place_id):
     sql = """SELECT stars, review, user_id, time FROM reviews
             WHERE exerciseplaces_id=:id ORDER BY time DESC"""
     return db.session.execute(text(sql), {"id":place_id}).fetchall()
+
+def create_groupname(name):
+    sql = "INSERT INTO groupnames (name) VALUES (:name)"
+    try:
+        db.session.execute(text(sql), {"name":name})
+        db.session.commit()
+        return True
+    except:
+        return False
+
+def add_place_to_group(place_id, groupname):
+    sql = """INSERT INTO groups (exerciseplaces_id, groupnames_id)
+            VALUES (:place_id, :groupname)"""
+    try:
+        db.session.execute(text(sql), {"place_id":place_id, "groupname":groupname})
+        db.session.commit()
+        return True
+    except:
+        return False
