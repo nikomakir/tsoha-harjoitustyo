@@ -38,5 +38,6 @@ CREATE TABLE groupnames (
 CREATE TABLE groups (
     id SERIAL PRIMARY KEY,
     exerciseplaces_id INTEGER REFERENCES exerciseplaces,
-    groupnames_id INTEGER REFERENCES groupnames
+    groupnames_id INTEGER REFERENCES groupnames,
+    UNIQUE(exerciseplaces_id,groupnames_id)
 );
