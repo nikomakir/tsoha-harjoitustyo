@@ -12,6 +12,12 @@ def delete_place(place_id):
     db.session.execute(text(sql), {"id":place_id})
     db.session.commit()
 
+def add_place(name, address, description):
+    sql = """INSERT INTO exerciseplaces (name, address, description)
+            VALUES (name:name, address:address, description:description)"""
+    db.session.execute(text(sql), {"name":name, "address":address, "description":description})
+    db.session.commit()
+
 
 
 
