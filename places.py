@@ -44,3 +44,8 @@ def get_opening_hours(place_id):
     sql = """SELECT o.weekday, o.opens, o.closes FROM exerciseplaces e LEFT JOIN openinghours o
             ON e.id=o.exerciseplaces_id WHERE e.id=:id"""
     return db.session.execute(text(sql), {"id":place_id}).fetchall()
+
+def get_reviews(place_id):
+    sql = """SELECT stars, review, user_id, time FROM reviews
+            WHERE exerciseplaces_id=:id ORDER BY time DESC"""
+    return db.session.execute(text(sql), {"id":place_id}).fetchall()
