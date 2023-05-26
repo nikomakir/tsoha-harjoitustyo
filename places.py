@@ -39,3 +39,8 @@ def add_review(place_id, user_id, stars, review):
                        {"exerciseplaces_id":place_id, "user_id":user_id, "stars":stars,
                         "review":review})
     db.session.commit()
+
+def get_opening_hours(place_id):
+    sql = """SELECT o.weekday, o.opens, o.closes FROM exerciseplaces e LEFT JOIN openinghours o
+            ON e.id=o.exerciseplaces_id WHERE e.id=:id"""
+    return db.session.execute(text(sql), {"id":place_id}).fetchall()
