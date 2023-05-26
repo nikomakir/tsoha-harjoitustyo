@@ -25,6 +25,13 @@ def add_opening_hours(place_id, weekday, opens, closes):
                        {"exerciseplaces_id":place_id, "weekday":weekday, "opens":opens, "closes": closes})
     db.session.commit()
 
+def update_places(place_id, name, address, description):
+    sql = """UPDATE exerciseplaces SET name=:name, address=:address, description=:description
+            WHERE id=:place_id"""
+    db.session.execute(text(sql),
+                       {"name":name, "address":address, "description":description, "place_id":place_id})
+    db.session.commit()
+
 def add_review(place_id, user_id, stars, review):
     sql = """INSERT INTO reviews (exerciseplaces_id, user_id, stars, review, time)
             VALUES (:exerciseplaces_id, :user_id, :stars, :review, NOW())"""
