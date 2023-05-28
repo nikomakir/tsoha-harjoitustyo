@@ -14,10 +14,12 @@ def delete_place(place_id):
 
 def add_place(name, address, description, monday, tuesday, wednesday,
               thursday, friday, saturday, sunday):
+
     sql = """INSERT INTO exerciseplaces (name, address, description, monday, tuesday,
             wednesday, thursday, friday, saturday, sunday)
             VALUES (:name, :address, :description, :monday, :tuesday, :wednesday,
             :thursday, :friday, :saturday, :sunday)"""
+
     db.session.execute(text(sql), {"name":name, "address":address, "description":description,
                                    "monday":monday, "tuesday":tuesday, "wednesday":wednesday,
                                    "thursday":thursday, "friday":friday, "saturday":saturday,
@@ -58,12 +60,27 @@ def create_groupname(name):
     except:
         return False
 
-def add_place_to_group(place_id, groupname):
+def get_groupnames():
+    sql = "SELECT id, name FROM groupnames ORDER BY name"
+    return db.session.execute(text(sql)).fetchall()
+
+def add_place_to_group(place_id, groupname_id):
     sql = """INSERT INTO groups (exerciseplaces_id, groupnames_id)
-            VALUES (:place_id, :groupname)"""
+            VALUES (:place_id, :groupnames_id)"""
     try:
-        db.session.execute(text(sql), {"place_id":place_id, "groupname":groupname})
+        db.session.execute(text(sql), {"place_id":place_id, "groupnames_id":groupname_id})
         db.session.commit()
         return True
     except:
         return False
+
+def get_groups(place_id):
+    sql = """SELECT n.id, n.name FROM groupnames n, groups g
+            WHERE n.id=g.groupnames_id AND g.exerciseplaces_id=:place_id
+            ORDER BY n.name"""
+    return db.session.execute(text(sql), {"place_id":place_id}).fetchall()
+
+def remove_from_group(place_id, group_id):
+    sql = "DELETE FROM groups WHERE exerciseplaces_id=:place_id AND groupnames_id=:group_id"
+    db.session.execute(text(sql), {"place_id":place_id, "group_id":group_id})
+    db.session.commit()
