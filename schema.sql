@@ -9,16 +9,15 @@ CREATE TABLE exerciseplaces (
     id SERIAL PRIMARY KEY,
     name TEXT,
     address TEXT,
-    description TEXT
+    description TEXT,
+    monday TEXT,
+    tuesday TEXT,
+    wednesday TEXT,
+    thursday TEXT,
+    friday TEXT,
+    saturday TEXT,
+    sunday TEXT
     ON DELETE CASCADE
-);
-
-CREATE TABLE openinghours (
-    id SERIAL PRIMARY KEY,
-    exerciseplaces_id INTEGER REFERENCES exerciseplaces,
-    weekday TEXT,
-    opens INTEGER,
-    closes INTEGER
 );
 
 CREATE TABLE reviews (
