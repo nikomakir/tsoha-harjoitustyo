@@ -12,25 +12,29 @@ def delete_place(place_id):
     db.session.execute(text(sql), {"id":place_id})
     db.session.commit()
 
-def add_place(name, address, description):
-    sql = """INSERT INTO exerciseplaces (name, address, description)
-            VALUES (:name, :address, :description)"""
-    db.session.execute(text(sql), {"name":name, "address":address, "description":description})
+def add_place(name, address, description, monday, tuesday, wednesday,
+              thursday, friday, saturday, sunday):
+    sql = """INSERT INTO exerciseplaces (name, address, description, monday, tuesday,
+            wednesday, thursday, friday, saturday, sunday)
+            VALUES (:name, :address, :description, :monday, :tuesday, :wednesday,
+            :thursday, :friday, :saturday, :sunday)"""
+    db.session.execute(text(sql), {"name":name, "address":address, "description":description,
+                                   "monday":monday, "tuesday":tuesday, "wednesday":wednesday,
+                                   "thursday":thursday, "friday":friday, "saturday":saturday,
+                                   "sunday":sunday})
     db.session.commit()
 
-def add_opening_hours(place_id, weekday, opens, closes):
-    sql = """INSERT INTO openinghours (exerciseplaces_id, weekday, opens, closes)
-            VALUES (:exerciseplaces_id, :weekday, :opens, :closes)"""
-    db.session.execute(text(sql),
-                       {"exerciseplaces_id":place_id, "weekday":weekday, "opens":opens, "closes": closes})
+def update_place(updates, place_id):
+    for update, new in updates.items():
+        sql = "UPDATE exerciseplaces SET :update=:value WHERE id=:place_id"
+        db.session.execute(text(sql), {"update":update, "value":new, "place_id":place_id})
     db.session.commit()
 
-def update_places(place_id, name, address, description):
-    sql = """UPDATE exerciseplaces SET name=:name, address=:address, description=:description
-            WHERE id=:place_id"""
-    db.session.execute(text(sql),
-                       {"name":name, "address":address, "description":description, "place_id":place_id})
-    db.session.commit()
+def get_place_info(place_id):
+    sql = """SELECT name, address, description, monday, tuesday,
+            wednesday, thursday, friday, saturday, sunday
+            FROM exerciseplaces WHERE id=:place_id"""
+    return db.session.execute(text(sql), {"place_id":place_id}).fetchone()
 
 def add_review(place_id, user_id, stars, review):
     sql = """INSERT INTO reviews (exerciseplaces_id, user_id, stars, review, time)
@@ -39,11 +43,6 @@ def add_review(place_id, user_id, stars, review):
                        {"exerciseplaces_id":place_id, "user_id":user_id, "stars":stars,
                         "review":review})
     db.session.commit()
-
-def get_opening_hours(place_id):
-    sql = """SELECT o.weekday, o.opens, o.closes FROM exerciseplaces e LEFT JOIN openinghours o
-            ON e.id=o.exerciseplaces_id WHERE e.id=:id"""
-    return db.session.execute(text(sql), {"id":place_id}).fetchall()
 
 def get_reviews(place_id):
     sql = """SELECT stars, review, user_id, time FROM reviews
