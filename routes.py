@@ -2,6 +2,7 @@ from flask import render_template, request, redirect
 from app import app
 import users
 import stats
+import places
 
 
 @app.route("/")
@@ -62,3 +63,11 @@ def search():
         return render_template("error.html", message="Hakusanalla ei löytynyt tuloksia")
 
     return render_template("/search", places=result)
+
+@app.route("/info/<int:place_id>")
+def info(place_id):
+    information = places.get_place_info(place_id)
+    groups = places.get_groups(place_id)
+    return render_template("info.html", name=information[0], groups=groups,
+                           address=information[1], hours=information[3:],
+                           description=information[2])
