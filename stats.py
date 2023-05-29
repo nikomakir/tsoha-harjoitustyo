@@ -10,5 +10,5 @@ def place_rankings():
 
 def find_all_by_word(word):
     sql = """SELECT id, name, description FROM exerciseplaces
-            WHERE description LIKE :query"""
+            WHERE description LIKE :query OR name LIKE :query"""
     return db.session.execute(text(sql), {"query":"%"+word+"%"}).fetchall()
