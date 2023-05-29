@@ -9,5 +9,13 @@ Olet kirjautunut sisään nimellä <b>{{session.user_name}}</b>. <a href="/logou
 Et ole kirjautunut sisään. <a href="/login">Kirjaudu sisään</a>
 {% endif %}
 
+<p>
+
+{% if session.user_id %}
+<form action="/search" method="get">
+Etsi paikkoja hakusanalla:
+<input type="text" name="query" minlength="1" maxlength="20">
+</form>
+{% endif %}
 
 {% endblock %}
