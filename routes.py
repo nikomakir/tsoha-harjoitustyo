@@ -72,7 +72,7 @@ def info(place_id):
                            address=information[1], hours=information[3:],
                            description=information[2])
 
-@app.route("/post_review/<int:place_id", methods=["GET", "POST"])
+@app.route("/post_review/<int:place_id>", methods=["GET", "POST"])
 def post_review(place_id):
     if request.method == "GET":
         return render_template("post_review.html", id=place_id)
@@ -91,3 +91,8 @@ def post_review(place_id):
             comment = "-"
         places.add_review(place_id, users.user_id(), stars, comment)
         return redirect("/reviews/"+str(place_id))
+
+@app.route("/reviews/<int:place_id>")
+def reviews(place_id):
+    results = places.get_reviews(place_id)
+    return render_template("reviews.html", reviews=results)
