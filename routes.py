@@ -1,6 +1,7 @@
 from flask import render_template, request, redirect
 from app import app
 import users
+import stats
 
 
 @app.route("/")
@@ -49,3 +50,15 @@ def register():
             return render_template("error.html", message="Rekisteröinti ei onnistunut")
 
         return redirect("/")
+
+@app.route("/search", methods=["GET"])
+def search():
+    query = request.form["query"]
+    if len(query) < 1 or len(query) > 20:
+        return render_template("error.html", message="Hakusanan tulee olla 1-20 merkkiä pitkä")
+
+    result = stats.find_all_by_word(query)
+    if len(result) == 0:
+        return render_template("error.html", message="Hakusanalla ei löytynyt tuloksia")
+
+    return render_template("/search", places=result)
