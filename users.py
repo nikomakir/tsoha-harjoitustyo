@@ -12,9 +12,9 @@ def login(name, password):
         return False
     if not check_password_hash(result.password, password):
         return False
-    session["user_id"] = result.id
+    session["user_id"] = result[0]
     session["user_name"] = name
-    session["user_role"] = result.role
+    session["user_role"] = result[2]
     session["csrf_token"] = os.urandom(16).hex()
     return True
 
