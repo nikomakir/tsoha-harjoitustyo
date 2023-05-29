@@ -1,0 +1,16 @@
+{% extends  "layout.html" %}
+{% block content %}
+<h2>Arvostelut</h2>
+<hr>
+{% for review in reviews %}
+<i>Käyttäjältä:</i> {{ review[0]}}
+<p>
+{{ review[1] }}/5 tähteä
+<p>
+{{ review[2] }}
+<p>
+<i>Lähetetty:</i> {{ review[3].strftime("%Y-%m-%d %H:%M:%S") }}
+<hr>
+{% endfor %}
+<a href="/">Etusivulle</a>
+{% end block %}
