@@ -59,7 +59,7 @@ def search():
         return render_template("error.html", message="Hakusanan tulee olla 1-20 merkkiä pitkä")
 
     result = stats.find_all_by_word(query)
-    if len(result) == 0:
+    if not result:
         return render_template("error.html", message="Hakusanalla ei löytynyt tuloksia")
 
     return render_template("/search", places=result)
@@ -71,3 +71,23 @@ def info(place_id):
     return render_template("info.html", name=information[0], groups=groups,
                            address=information[1], hours=information[3:],
                            description=information[2])
+
+@app.route("/post_review/<int:place_id", methods=["GET", "POST"])
+def post_review(place_id):
+    if request.method == "GET":
+        return render_template("post_review.html", id=place_id)
+    if request.method == "POST":
+        users.require_role(1)
+        users.check_csrf()
+
+        stars = int(request.form["stars"])
+        if stars < 1 or stars > 5:
+            return render_template("error.html", message="Virheellinen tähtimäärä")
+
+        comment = request.form["comment"]
+        if len(comment) > 1000:
+            return render_template("error.html", message="Liian pitkä kommentti")
+        if comment == "":
+            comment = "-"
+        places.add_review(place_id, users.user_id(), stars, comment)
+        return redirect("/reviews/"+str(place_id))
