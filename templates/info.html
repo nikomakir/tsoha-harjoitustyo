@@ -1,0 +1,33 @@
+{ % extends "layout.html" %}
+{% block content %}
+
+<h2>Lisätietoja</h2>
+
+<h3>{{ name }}</h3>
+
+{% if groups %}
+<table>
+<tr>
+{% for group in groups %}
+<td>{{ group.name }}</td> 
+</tr>
+</table>
+{% endif %}
+<p>
+Osoite: {{ address }} <br>
+Aukioloajat:<br>
+<table>
+<tr><th>Ma</th><th>Ti</th><th>Ke</th><th>To</th><th>Pe</th><th>La</th><th>Su</th></tr>
+<tr>
+{% for day in hours %}
+<td>{{ day }}</td>
+</tr>
+</table>
+<p>
+Kuvaus:<br>
+{{ description }}
+<p>
+<a href="/reviews/{{ id }}">Katso arvostelut</a> | <a href="/post_review/{{ id }}">Anna arvio</a>
+<p>
+<a href="/">Etusivulle</a>
+{% endblock %}

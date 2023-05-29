@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Tulokset</h2>
+<hr>
+{% for place in places %}
+Nimi: {{ place[1] }}<br>
+Kuvaus: <br>
+{{ place[2] }} <br>
+<a href="/info/{{ place[0] }}">Lisätietoja</a>
+<hr>
+{% endfor %}
+<p>
+<a href="/">Takaisin</a>
+{% endblock %}
