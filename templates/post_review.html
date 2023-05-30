@@ -3,7 +3,6 @@
 
 <h2>Anna arvio</h2>
 
-{% if session.user_id %}
 <form action="/post_review/{{ id }}" method="post">
 Tähdet:
 <select name="stars">
@@ -20,7 +19,6 @@ Kommentti: <br>
 <input type="submit" value="Lähetä">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}"
 </form>
-{% endif %}
 <p>
 <a href="/">Etusivulle</a>
 {% endblock %}

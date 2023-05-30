@@ -75,6 +75,7 @@ def info(place_id):
 @app.route("/post_review/<int:place_id>", methods=["GET", "POST"])
 def post_review(place_id):
     if request.method == "GET":
+        users.require_role(1)
         return render_template("post_review.html", id=place_id)
     if request.method == "POST":
         users.require_role(1)
