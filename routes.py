@@ -96,3 +96,8 @@ def post_review(place_id):
 def reviews(place_id):
     results = places.get_reviews(place_id)
     return render_template("reviews.html", reviews=results)
+
+@app.route("/list")
+def place_list():
+    ranking = stats.place_rankings()
+    return render_template("list.html", rankings=ranking)
