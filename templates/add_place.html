@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Lisää uusi kohde</h2>
+
+<form action="/add_place" method="post">
+Nimi: 
+<input type="text" minlength="1" maxlength="20" name="name">
+<br>
+Osoite:
+<input type="text" minlength="1" maxlength="20" name="address">
+<br>
+
+<p>Kuvaus: <br>
+<textarea maxlength="1000" name="description" rows="3" cols="40">
+Kirjoita tähän.
+</textarea></p>
+
+<p>
+Aukioloajat (jätä tyhjäksi, jos kyseisenä päivänä suljettu):
+<ul>
+    <li>Ma: <input type="time" name="ma_auki"> - <input type="time" name="ma_kiinni"></li>
+    <li>Ti: <input type="time" name="ti_auki"> - <input type="time" name="ti_kiinni"></li>
+    <li>Ke: <input type="time" name="ke_auki"> - <input type="time" name="ke_kiinni"></li>
+    <li>To: <input type="time" name="to_auki"> - <input type="time" name="to_kiinni"></li>
+    <li>Pe: <input type="time" name="pe_auki"> - <input type="time" name="pe_kiinni"></li>
+    <li>La: <input type="time" name="la_auki"> - <input type="time" name="la_kiinni"></li>
+    <li>Su: <input type="time" name="su_auki"> - <input type="time" name="su_kiinni"></li>
+</ul>
+</p>
+
+<p>
+<input type="submit" value="Lähetä">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+<p><a href="/">Takaisin</a></p>
+{% endblock %}
