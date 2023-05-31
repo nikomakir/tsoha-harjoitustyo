@@ -18,13 +18,14 @@ def add_place(name, address, description, monday, tuesday, wednesday,
     sql = """INSERT INTO exerciseplaces (name, address, description, monday, tuesday,
             wednesday, thursday, friday, saturday, sunday)
             VALUES (:name, :address, :description, :monday, :tuesday, :wednesday,
-            :thursday, :friday, :saturday, :sunday)"""
+            :thursday, :friday, :saturday, :sunday) RETURNING id"""
 
-    db.session.execute(text(sql), {"name":name, "address":address, "description":description,
+    place_id = db.session.execute(text(sql), {"name":name, "address":address, "description":description,
                                    "monday":monday, "tuesday":tuesday, "wednesday":wednesday,
                                    "thursday":thursday, "friday":friday, "saturday":saturday,
                                    "sunday":sunday})
     db.session.commit()
+    return place_id
 
 def update_place(updates, place_id):
     for update, new in updates.items():
