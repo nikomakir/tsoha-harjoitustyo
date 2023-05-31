@@ -9,6 +9,14 @@ Olet kirjautunut sisään nimellä <b>{{session.user_name}}</b>. <a href="/logou
 Et ole kirjautunut sisään. <a href="/login">Kirjaudu sisään</a>
 {% endif %}
 
+{% if session.user_role == 2 %}
+<h3>Ylläpitäjän toiminnot:</h3>
+<ul>
+    <li><a href="/add_place">Lisää uusi kohde palveluun</a></li>
+    <li><a href="/add_group">Luo uusi ryhmä</a></li>
+    <li><a href="/update">Muokkaa tietoja</a></li>
+</ul>
+{% endif %}
 <p>
 
 <form action="/search" method="get">
