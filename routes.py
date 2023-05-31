@@ -102,3 +102,37 @@ def reviews(place_id):
 def place_list():
     ranking = stats.place_rankings()
     return render_template("list.html", rankings=ranking)
+
+@app.route("/add_place", methods=["GET", "POST"])
+def add_place():
+    if request.method == "GET":
+        users.require_role(2)
+        return render_template("add_place.html")
+
+    if request.method == "POST":
+        users.require_role(2)
+        users.check_csrf()
+
+        name = request.form["name"]
+        if len(name) < 1 or len(name) > 20:
+            return render_template("error.html", message="Nimen tulee olla 1-20 merkkiä pitkä")
+        address = request.form["address"]
+        if len(address) < 1 or len(address) > 20:
+            return render_template("error.html", message="Osoite tulee olla 1-20 merkkiä pitkä")
+        description = request.form["description"]
+        if len(description) > 1000:
+            return render_template("error.html", message="Kuvaus on liian pitkä")
+
+        monday_hours = request.form["open_mon"] + "-" + request.form["close_mon"]
+        tuesday_hours = request.form["open_tue"] + "-" + request.form["close_tue"]
+        wednesday_hours = request.form["open_wed"] + "-" + request.form["close_wed"]
+        thursday_hours = request.form["open_thu"] + "-" + request.form["close_thu"]
+        friday_hours = request.form["open_fri"] + "-" + request.form["close_fri"]
+        saturday_hours = request.form["open_sat"] + "-" + request.form["close_sat"]
+        sunday_hours = request.form["open_sun"] + "-" + request.form["close_sun"]
+
+        place_id = places.add_place(name, address, description, monday_hours, tuesday_hours,
+                         wednesday_hours, thursday_hours, friday_hours,
+                         saturday_hours, sunday_hours)
+
+        return redirect("/info/"+str(place_id))
