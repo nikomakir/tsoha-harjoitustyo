@@ -3,7 +3,7 @@ from db import db
 
 
 def place_rankings():
-    sql = """SELECT p.id, p.name, COALESCE(SELECT AVG(stars) FROM reviews
+    sql = """SELECT p.id, p.name, COALESCE((SELECT AVG(stars) FROM reviews
             WHERE exerciseplaces_id=p.id), 0) r
             FROM exerciseplaces p GROUP BY p.id ORDER BY r DESC"""
     return db.session.execute(text(sql)).fetchall()
