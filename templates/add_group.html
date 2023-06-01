@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Luo ryhmä</h2>
+
+<form action="/add_group" method="post">
+Ryhmän nimi: <input type="text" minlength="1" maxlength="20" name="groupname">
+<p>
+<input type="submit" value="Luo ryhmä">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+<p>
+<a href="/">Etusivulle</a>
+{% endblock %}
