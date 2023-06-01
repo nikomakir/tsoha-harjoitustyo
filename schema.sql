@@ -17,12 +17,12 @@ CREATE TABLE exerciseplaces (
     friday TEXT,
     saturday TEXT,
     sunday TEXT
-    ON DELETE CASCADE
 );
 
 CREATE TABLE reviews (
     id SERIAL PRIMARY KEY,
-    exerciseplaces_id INTEGER REFERENCES exerciseplaces,
+    exerciseplaces_id INTEGER REFERENCES exerciseplaces
+    ON DELETE CASCADE,
     user_id INTEGER REFERENCES users,
     stars INTEGER,
     review TEXT,
@@ -36,7 +36,8 @@ CREATE TABLE groupnames (
 
 CREATE TABLE groups (
     id SERIAL PRIMARY KEY,
-    exerciseplaces_id INTEGER REFERENCES exerciseplaces,
+    exerciseplaces_id INTEGER REFERENCES exerciseplaces
+    ON DELETE CASCADE,
     groupnames_id INTEGER REFERENCES groupnames,
     UNIQUE(exerciseplaces_id,groupnames_id)
 );
