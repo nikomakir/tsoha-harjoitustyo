@@ -136,3 +136,18 @@ def add_place():
                          saturday_hours, sunday_hours)
 
         return redirect("/info/"+str(place_id))
+
+@app.route("/add_group", methods=["GET", "POST"])
+def add_group():
+    if request.method == "GET":
+        users.require_role(2)
+        return render_template("add_group.html")
+    if request.method == "POST":
+        users.require_role(2)
+        users.check_csrf()
+        group_name = request.form["groupname"]
+        if len(group_name) < 1 or len(group_name) > 20:
+            return render_template("error.html", message="Nimen pituus tulee olla 1-20 merkkiä")
+        if not places.create_groupname(group_name):
+            return render_template("error.html", message="Samanniminen ryhmä on jo olemassa")
+        return redirect("/")
