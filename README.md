@@ -12,3 +12,21 @@ Sovelluksessa pystyy selaamaan tietyn alueen liikuntaharrastuspaikkoja ja lukema
 - Käyttäjä näkee listan, jossa on kaikki liikuntaharrastuspaikat arvioiden mukaisessa paremmuusjärjestyksessä. *(tehty)*
 - Ylläpitäjällä on mahdollisuus poistaa käyttäjän antama arvio.
 - Ylläpitäjä voi luoda ryhmiä, joihin erilaisia liikuntaharrastuspaikkoja voi luokitella. Jokainen sovelluksessa esiintyvä liikuntaharrastuspaikka voi kuulua yhteen tai useampaan ryhmään. *(tehty)*
+
+## Testaaminen
+
+Sovellusta voi testata vain paikallisesti. Toimi näin:
+
+1) Kloonaa repostiorio koneellesi ja siirry sen juurihakemistoon.
+2) Luo sinne ```.env``` tiedosto.
+3) Määritä sen sisältö:  
+ DATABASE_URL='tietokannan-paikallinen-osoite'  
+ SECRET_KEY='salainen-avain'
+4) Seuraavaksi aktivoi virtuaaliympäristö ja asenna riippvuudet:  
+*python3 -m venv venv*  
+*source venv/bin/activate*  
+*pip install -r ./requirements.txt*
+5) Määritä vielä tietokannan skeema:  
+*psql < schema.sql*
+6) Käynnistö komennolla:  
+*flask run*
