@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Muokkaa kohdetta</h2>
+
+{% if not content %}
+<p>
+    <form action="/update" method="post">
+        Valitse kohde:
+        <select name="place_id">
+            {% for place in places %}
+            <option value="{{ place[0] }}">{{ place[1] }}</option>
+            {% endfor %}
+        </select>
+        <p>
+        <input type="submit" value="Muokkaa">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    </form>
+</p>
+
+{% else %}
+<p>
+<form action="/update" method="post">
+Nimi: 
+<textarea minlength="1" maxlength="20" name="name" rows="1" cols="20">
+{{ content.name }}
+</textarea>
+<br>
+Osoite:
+<textarea minlength="1" maxlength="20" name="address" rows="1" cols="20">
+{{ content.address }}
+</textarea>
+<br>
+<p>Kuvaus: <br>
+<textarea maxlength="1000" name="description" rows="3" cols="40">
+{{ content.description }}
+</textarea></p>
+
+<p>
+Aukioloajat (jätä tyhjäksi, jos kyseisenä päivänä suljettu):
+<ul>
+    <li>Ma: <input type="time" name="open_mon"> - <input type="time" name="close_mon"></li>
+    <li>Ti: <input type="time" name="open_tue"> - <input type="time" name="close_tue"></li>
+    <li>Ke: <input type="time" name="open_wed"> - <input type="time" name="close_wed"></li>
+    <li>To: <input type="time" name="open_thu"> - <input type="time" name="close_thu"></li>
+    <li>Pe: <input type="time" name="open_fri"> - <input type="time" name="close_fri"></li>
+    <li>La: <input type="time" name="open_sat"> - <input type="time" name="close_sat"></li>
+    <li>Su: <input type="time" name="open_sun"> - <input type="time" name="close_sun"></li>
+</ul>
+</p>
+<p>
+    Lisää ryhmiin:
+    <p>
+    {% for group in groups %}
+    <input type="checkbox" name="group" value="{{ group[0] }}">{{ group[1] }}
+    {% endfor %}
+</p>
+
+<p>
+<input type="submit" value="Lähetä">
+<input type="hidden" name="id" value="{{ content.id }}">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+<p>
+<form action="/delete_place/{{ content.id }}" method="post">
+<input type="submit" value="Poista palvelusta">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+</p>
+{% endif %}
+<p>
+<a href="/">Takaisin</a>
+{% endblock %}
