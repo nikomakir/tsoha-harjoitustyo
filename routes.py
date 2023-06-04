@@ -70,7 +70,7 @@ def info(place_id):
     groups = places.get_groups(place_id)
     return render_template("info.html", name=information[0], groups=groups,
                            address=information[1], hours=information[3:],
-                           description=information[2])
+                           description=information[2], id=place_id)
 
 @app.route("/post_review/<int:place_id>", methods=["GET", "POST"])
 def post_review(place_id):
