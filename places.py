@@ -20,21 +20,31 @@ def add_place(name, address, description, monday, tuesday, wednesday,
             VALUES (:name, :address, :description, :monday, :tuesday, :wednesday,
             :thursday, :friday, :saturday, :sunday) RETURNING id"""
 
-    place_id = db.session.execute(text(sql), {"name":name, "address":address, "description":description,
+    result = db.session.execute(text(sql), {"name":name, "address":address, "description":description,
                                    "monday":monday, "tuesday":tuesday, "wednesday":wednesday,
                                    "thursday":thursday, "friday":friday, "saturday":saturday,
                                    "sunday":sunday})
+    place_id = result.fetchone()[0]
     db.session.commit()
     return place_id
 
-def update_place(updates, place_id):
-    for update, new in updates.items():
-        sql = "UPDATE exerciseplaces SET :update=:value WHERE id=:place_id"
-        db.session.execute(text(sql), {"update":update, "value":new, "place_id":place_id})
+def update_place(place_id, name, address, description,
+                 monday, tuesday, wednesday, thursday,
+                 friday, saturday, sunday):
+    sql = """UPDATE exerciseplaces SET name=:name, address=:address,
+            description=:description, monday=:monday, tuesday=:tuesday,
+            wednesday=:wednesday, thursday=:thursday, friday=:friday,
+            saturday=:saturday, sunday=:sunday
+            WHERE id=:place_id"""
+
+    db.session.execute(text(sql), {"name":name, "address":address, "description":description,
+                                   "monday":monday, "tuesday":tuesday, "wednesday":wednesday,
+                                   "thursday":thursday, "friday":friday, "saturday":saturday,
+                                   "sunday":sunday, "place_id":place_id})
     db.session.commit()
 
 def get_place_info(place_id):
-    sql = """SELECT name, address, description, monday, tuesday,
+    sql = """SELECT id, name, address, description, monday, tuesday,
             wednesday, thursday, friday, saturday, sunday
             FROM exerciseplaces WHERE id=:place_id"""
     return db.session.execute(text(sql), {"place_id":place_id}).fetchone()
@@ -71,9 +81,8 @@ def add_place_to_group(place_id, groupname_id):
     try:
         db.session.execute(text(sql), {"place_id":place_id, "groupnames_id":groupname_id})
         db.session.commit()
-        return True
     except:
-        return False
+        pass
 
 def get_groups(place_id):
     sql = """SELECT n.id, n.name FROM groupnames n, groups g
