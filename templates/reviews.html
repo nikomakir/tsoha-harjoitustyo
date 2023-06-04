@@ -2,6 +2,7 @@
 {% block content %}
 <h2>Arvostelut</h2>
 <hr>
+{% if reviews %}
 {% for review in reviews %}
 <i>Käyttäjältä:</i> {{ review[0]}}
 <p>
@@ -12,5 +13,6 @@
 <i>Lähetetty:</i> {{ review[3].strftime("%Y-%m-%d %H:%M:%S") }}
 <hr>
 {% endfor %}
+{% endif %}
 <a href="/">Etusivulle</a>
-{% end block %}
+{% endblock %}

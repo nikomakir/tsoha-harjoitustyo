@@ -12,6 +12,7 @@
 <td>{{ group.name }}</td> 
 </tr>
 </table>
+{% endfor %}
 {% endif %}
 <p>
 Osoite: {{ address }} <br>
@@ -21,6 +22,7 @@ Aukioloajat:<br>
 <tr>
 {% for day in hours %}
 <td>{{ day }}</td>
+{% endfor %}
 </tr>
 </table>
 <p>
