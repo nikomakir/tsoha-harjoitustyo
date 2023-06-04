@@ -6,7 +6,7 @@
 <hr>
 {% for place in rankings %}
 <i>Nimi:</i> {{ place[1] }} <br>
-{{ place[2] }}/5 tähteä <br>
+{{ "%.1f"|format(place[2]) }}/5 tähteä <br>
 <a href="/info/{{ place[0] }}">Lisätietoja</a> | <a href="/reviews/{{ place[0] }}">Arvostelut</a>
 <hr>
 {% endfor %}
