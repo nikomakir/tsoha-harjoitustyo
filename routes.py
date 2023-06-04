@@ -68,9 +68,9 @@ def search():
 def info(place_id):
     information = places.get_place_info(place_id)
     groups = places.get_groups(place_id)
-    return render_template("info.html", name=information[0], groups=groups,
-                           address=information[1], hours=information[3:],
-                           description=information[2], id=place_id)
+    return render_template("info.html", name=information[1], groups=groups,
+                           address=information[2], hours=information[4:],
+                           description=information[3], id=information[0])
 
 @app.route("/post_review/<int:place_id>", methods=["GET", "POST"])
 def post_review(place_id):
@@ -135,7 +135,7 @@ def add_place():
                          wednesday_hours, thursday_hours, friday_hours,
                          saturday_hours, sunday_hours)
 
-        return redirect("/info/"+str(place_id))
+        return redirect("/info/" + str(place_id))
 
 @app.route("/add_group", methods=["GET", "POST"])
 def add_group():
@@ -151,3 +151,42 @@ def add_group():
         if not places.create_groupname(group_name):
             return render_template("error.html", message="Samanniminen ryhmä on jo olemassa")
         return redirect("/")
+
+@app.route("/update", methods=["GET", "POST"])
+def update():
+    if request.method == "GET":
+        users.require_role(2)
+        return render_template("update.html", content="", places=stats.place_list())
+    if request.method == "POST":
+        users.require_role(2)
+        users.check_csrf()
+        if "place_id" in request.form:
+            content = places.get_place_info(int(request.form["place_id"]))
+            groups = places.get_groupnames()
+            return render_template("update.html", content=content, groups=groups)
+
+        name = request.form["name"]
+        address = request.form["address"]
+        description = request.form["description"]
+        monday_hours = request.form["open_mon"] + "-" + request.form["close_mon"]
+        tuesday_hours = request.form["open_tue"] + "-" + request.form["close_tue"]
+        wednesday_hours = request.form["open_wed"] + "-" + request.form["close_wed"]
+        thursday_hours = request.form["open_thu"] + "-" + request.form["close_thu"]
+        friday_hours = request.form["open_fri"] + "-" + request.form["close_fri"]
+        saturday_hours = request.form["open_sat"] + "-" + request.form["close_sat"]
+        sunday_hours = request.form["open_sun"] + "-" + request.form["close_sun"]
+        place_id = request.form["id"]
+        places.update_place(place_id, name, address, description, monday_hours,
+                            tuesday_hours, wednesday_hours, thursday_hours, friday_hours,
+                            saturday_hours, sunday_hours)
+        if "group" in request.form:
+            for group_id in request.form["group"]:
+                places.add_place_to_group(place_id, int(group_id))
+        return redirect("/info/" + str(place_id))
+
+@app.route("/delete_place/<int:place_id>", methods=["POST"])
+def delete_place(place_id):
+    users.require_role(2)
+    users.check_csrf()
+    places.delete_place(int(place_id))
+    return redirect("/")
