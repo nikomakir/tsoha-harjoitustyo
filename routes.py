@@ -52,7 +52,7 @@ def register():
 
         return redirect("/")
 
-@app.route("/search", methods=["GET"])
+@app.route("/search", methods=["POST"])
 def search():
     query = request.form["query"]
     if len(query) < 1 or len(query) > 20:
@@ -62,7 +62,7 @@ def search():
     if not result:
         return render_template("error.html", message="Hakusanalla ei löytynyt tuloksia")
 
-    return render_template("/search", places=result)
+    return render_template("search.html", places=result)
 
 @app.route("/info/<int:place_id>")
 def info(place_id):
