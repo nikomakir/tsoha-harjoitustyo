@@ -2,6 +2,10 @@ from sqlalchemy.sql import text
 from db import db
 
 
+def place_list():
+    sql = "SELECT id, name FROM exerciseplaces ORDER BY id"
+    return db.session.execute(text(sql)).fetchall()
+
 def place_rankings():
     sql = """SELECT p.id, p.name, COALESCE((SELECT AVG(stars) FROM reviews
             WHERE exerciseplaces_id=p.id), 0) r
