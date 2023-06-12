@@ -96,7 +96,7 @@ def post_review(place_id):
 @app.route("/reviews/<int:place_id>")
 def reviews(place_id):
     results = places.get_reviews(place_id)
-    return render_template("reviews.html", reviews=results)
+    return render_template("reviews.html", reviews=results, id=place_id)
 
 @app.route("/list")
 def place_list():
@@ -190,3 +190,11 @@ def delete_place(place_id):
     users.check_csrf()
     places.delete_place(int(place_id))
     return redirect("/")
+
+@app.route("/delete_review/<int:review_id>", methods=["POST"])
+def delete_review(review_id):
+    users.require_role(2)
+    users.check_csrf()
+    places.delete_review(review_id)
+    place_id = request.form["place_id"]
+    return redirect("/reviews/" + str(place_id))
