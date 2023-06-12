@@ -58,7 +58,7 @@ def add_review(place_id, user_id, stars, review):
     db.session.commit()
 
 def get_reviews(place_id):
-    sql = """SELECT u.username, r.stars, r.review, r.time FROM reviews r, users u
+    sql = """SELECT r.id, u.username, r.stars, r.review, r.time FROM reviews r, users u
             WHERE r.exerciseplaces_id=:id AND r.user_id=u.id ORDER BY r.time DESC"""
     return db.session.execute(text(sql), {"id":place_id}).fetchall()
 
