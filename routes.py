@@ -114,11 +114,11 @@ def add_place():
         users.check_csrf()
 
         name = request.form["name"]
-        if len(name) < 1 or len(name) > 20:
-            return render_template("error.html", message="Nimen tulee olla 1-20 merkkiä pitkä")
+        if len(name) < 1 or len(name) > 40:
+            return render_template("error.html", message="Nimen tulee olla 1-40 merkkiä pitkä")
         address = request.form["address"]
-        if len(address) < 1 or len(address) > 20:
-            return render_template("error.html", message="Osoite tulee olla 1-20 merkkiä pitkä")
+        if len(address) < 1 or len(address) > 40:
+            return render_template("error.html", message="Osoite tulee olla 1-40 merkkiä pitkä")
         description = request.form["description"]
         if len(description) > 1000:
             return render_template("error.html", message="Kuvaus on liian pitkä")
@@ -161,13 +161,20 @@ def update():
         users.require_role(2)
         users.check_csrf()
         if "place_id" in request.form:
-            content = places.get_place_info(int(request.form["place_id"]))
+            content = places.get_place_info(request.form["place_id"])
             groups = places.get_groupnames()
             return render_template("update.html", content=content, groups=groups)
 
         name = request.form["name"]
+        if len(name) < 1 or len(name) > 40:
+            return render_template("error.html", message="Nimen tulee olla 1-40 merkkiä pitkä")
         address = request.form["address"]
+        if len(address) < 1 or len(address) > 40:
+            return render_template("error.html", message="Osoite tulee olla 1-40 merkkiä pitkä")
         description = request.form["description"]
+        if len(description) > 1000:
+            return render_template("error.html", message="Kuvaus on liian pitkä")
+
         monday_hours = request.form["open_mon"] + "-" + request.form["close_mon"]
         tuesday_hours = request.form["open_tue"] + "-" + request.form["close_tue"]
         wednesday_hours = request.form["open_wed"] + "-" + request.form["close_wed"]
@@ -188,7 +195,7 @@ def update():
 def delete_place(place_id):
     users.require_role(2)
     users.check_csrf()
-    places.delete_place(int(place_id))
+    places.delete_place(place_id)
     return redirect("/")
 
 @app.route("/delete_review/<int:review_id>", methods=["POST"])
