@@ -4,13 +4,22 @@
 <hr>
 {% if reviews %}
 {% for review in reviews %}
-<i>Käyttäjältä:</i> {{ review[0]}}
+<i>Käyttäjältä:</i> {{ review[1]}}
 <p>
-{{ review[1] }}/5 tähteä
+{{ review[2] }}/5 tähteä
 <p>
-{{ review[2] }}
+{{ review[3] }}
 <p>
-<i>Lähetetty:</i> {{ review[3].strftime("%Y-%m-%d %H:%M:%S") }}
+<i>Lähetetty:</i> {{ review[4].strftime("%Y-%m-%d %H:%M:%S") }}
+{% if session.user_role==2 %}
+<p>
+    <form action="/delete_review/{{ review[0] }}" method="post">
+        <input type="submit" value="Poista arvio">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+        <input type="hidden" name="place_id" value="{{ id }}">
+    </form>
+</p>
+{% endif %}
 <hr>
 {% endfor %}
 {% endif %}
