@@ -5,7 +5,7 @@ Sovelluksessa pystyy selaamaan tietyn alueen liikuntaharrastuspaikkoja ja lukema
 ## Toiminnallisuudet
 
 - Käyttäjä voi luoda uuden tunnuksen ja kirjautua sisään ja ulos. *(tehty)*
-- Käyttäjä näkee erilaisia liikuntaharrastuspaikkoja kartalla ja voi painaa tietyn palvelun kohdalta, jolloin hänelle näytetään enemmän tietoa esim. kuvaus ja aukioloajat.
+- Käyttäjä näkee erilaisia liikuntaharrastuspaikkoja kartalla ja voi painaa tietyn palvelun kohdalta, jolloin hänelle näytetään enemmän tietoa esim. kuvaus ja aukioloajat. *(kartta näkyy, mutta paikat eivät vielä)*
 - Käyttäjä voi antaa arvioita sanallisesti ja tähdillä sekä lukea muiden antamia arvioita. *(tehty)*
 - Ylläpitäjä voi lisätä ja poistaa palvelussa näytettäviä liikuntaharrastuspaikkoja ja määrittämään niistä näytettävät tiedot. *(tehty)*
 - Käyttäjä voi etsiä liikuntaharrastuspaikkoja, joiden kuvauksessa esiintyy tietty sana. *(tehty)*
