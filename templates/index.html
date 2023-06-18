@@ -29,4 +29,17 @@ Etsi paikkoja hakusanalla: <br>
 
 Katso <a href="/list">listana</a>.
 
+<p>
+
+<div id="map"></div>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+<script>
+    async function initMap() {
+        let MyCenter = {lat:60.185650, lng:24.938089};
+        let map = new google.maps.Map(
+            document.getElementById('map'), {zoom:11, center:MyCenter}
+            )
+    }
+    initMap()
+</script>
 {% endblock %}
