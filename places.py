@@ -12,15 +12,16 @@ def delete_place(place_id):
     db.session.execute(text(sql), {"id":place_id})
     db.session.commit()
 
-def add_place(name, address, description, monday, tuesday, wednesday,
+def add_place(name, address, latitude, longitude, description, monday, tuesday, wednesday,
               thursday, friday, saturday, sunday):
 
-    sql = """INSERT INTO exerciseplaces (name, address, description, monday, tuesday,
-            wednesday, thursday, friday, saturday, sunday)
-            VALUES (:name, :address, :description, :monday, :tuesday, :wednesday,
+    sql = """INSERT INTO exerciseplaces (name, address, latitude, longitude, description, monday,
+            tuesday, wednesday, thursday, friday, saturday, sunday)
+            VALUES (:name, :address, :latitude, :longitude, :description, :monday, :tuesday, :wednesday,
             :thursday, :friday, :saturday, :sunday) RETURNING id"""
 
-    result = db.session.execute(text(sql), {"name":name, "address":address, "description":description,
+    result = db.session.execute(text(sql), {"name":name, "address":address, "latitude":latitude,
+                                   "longitude":longitude, "description":description,
                                    "monday":monday, "tuesday":tuesday, "wednesday":wednesday,
                                    "thursday":thursday, "friday":friday, "saturday":saturday,
                                    "sunday":sunday})
@@ -31,6 +32,7 @@ def add_place(name, address, description, monday, tuesday, wednesday,
 def update_place(place_id, name, address, description,
                  monday, tuesday, wednesday, thursday,
                  friday, saturday, sunday):
+
     sql = """UPDATE exerciseplaces SET name=:name, address=:address,
             description=:description, monday=:monday, tuesday=:tuesday,
             wednesday=:wednesday, thursday=:thursday, friday=:friday,

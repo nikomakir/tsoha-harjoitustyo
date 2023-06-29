@@ -119,6 +119,10 @@ def add_place():
         address = request.form["address"]
         if len(address) < 1 or len(address) > 40:
             return render_template("error.html", message="Osoite tulee olla 1-40 merkkiä pitkä")
+        lat = request.form["lat"]
+        lng = request.form["lng"]
+        if len(lat) < 1 or len(lng) < 1 or len(lat) > 40 or len(lng) > 40:
+            return render_template("error.html", message="Väärän mittaiset koordinaatit")
         description = request.form["description"]
         if len(description) > 1000:
             return render_template("error.html", message="Kuvaus on liian pitkä")
@@ -131,7 +135,8 @@ def add_place():
         saturday_hours = request.form["open_sat"] + "-" + request.form["close_sat"]
         sunday_hours = request.form["open_sun"] + "-" + request.form["close_sun"]
 
-        place_id = places.add_place(name, address, description, monday_hours, tuesday_hours,
+        place_id = places.add_place(name, address, lat, lng, description,
+                         monday_hours, tuesday_hours,
                          wednesday_hours, thursday_hours, friday_hours,
                          saturday_hours, sunday_hours)
 

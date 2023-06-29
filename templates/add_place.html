@@ -10,7 +10,9 @@ Nimi:
 Osoite:
 <input type="text" minlength="1" maxlength="40" name="address">
 <br>
-
+Syötä koordinaatit (alempana olevalla kartalla voi etsiä):<br>
+Lat:<input type="text" minlength="1" maxlength="40" name="lat"><br>
+Lng:<input type="text" minlength="1" maxlength="40" name="lng"><br>
 <p>Kuvaus: <br>
 <textarea maxlength="1000" name="description" rows="3" cols="40">
 Kirjoita tähän.
@@ -33,5 +35,34 @@ Aukioloajat (jätä tyhjäksi, jos kyseisenä päivänä suljettu):
 <input type="submit" value="Lähetä">
 <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
+
+<div id="map"></div>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+<script>
+    async function initMap() {
+        let MyCenter = {lat:60.185650, lng:24.938089};
+        let map = new google.maps.Map(
+            document.getElementById('map'), {zoom:11, center:MyCenter}
+            );
+        let infoWindow = new google.maps.infoWindow({
+            content:"Klikkaa karttaa saadaksesi koordinaatit",
+            position:MyCenter,
+        });
+
+        infoWindow.open(map);
+        map.addListener("click", (mapsMouseEvent) => {
+        infoWindow.close();
+        infoWindow = new google.maps.InfoWindow({
+        position: mapsMouseEvent.latLng,
+        });
+        infoWindow.setContent(
+        JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
+        );
+        infoWindow.open(map);
+        });
+    }
+    initMap()
+</script>
+
 <p><a href="/">Takaisin</a></p>
 {% endblock %}

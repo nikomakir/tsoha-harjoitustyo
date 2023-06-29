@@ -9,6 +9,8 @@ CREATE TABLE exerciseplaces (
     id SERIAL PRIMARY KEY,
     name TEXT,
     address TEXT,
+    latitude FLOAT,
+    longitude FLOAT,
     description TEXT,
     monday TEXT,
     tuesday TEXT,
