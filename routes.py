@@ -127,6 +127,10 @@ def add_place():
         if len(description) > 1000:
             return render_template("error.html", message="Kuvaus on liian pitkä")
 
+        for day in ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]:
+            if len(request.form["open_"+day]) > 5 or len(request.form["close_"+day]) > 5:
+                return render_template("error.html", message="Vääränmittainen aukioloaika")
+
         monday_hours = request.form["open_mon"] + "-" + request.form["close_mon"]
         tuesday_hours = request.form["open_tue"] + "-" + request.form["close_tue"]
         wednesday_hours = request.form["open_wed"] + "-" + request.form["close_wed"]
@@ -179,6 +183,10 @@ def update():
         description = request.form["description"]
         if len(description) > 1000:
             return render_template("error.html", message="Kuvaus on liian pitkä")
+
+        for day in ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]:
+            if len(request.form["open_"+day]) > 5 or len(request.form["close_"+day]) > 5:
+                return render_template("error.html", message="Vääränmittainen aukioloaika")
 
         monday_hours = request.form["open_mon"] + "-" + request.form["close_mon"]
         tuesday_hours = request.form["open_tue"] + "-" + request.form["close_tue"]
