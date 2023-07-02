@@ -5,7 +5,7 @@ Sovellus on harjoitustyö Helsingin Yliopiston kurssille harjoitustyö: Tietokan
 ## Toiminnallisuudet
 
 - Käyttäjä voi luoda uuden tunnuksen ja kirjautua sisään ja ulos. 
-- Käyttäjä näkee erilaisia liikuntaharrastuspaikkoja kartalla ja voi painaa tietyn palvelun kohdalta, jolloin hänelle näytetään enemmän tietoa esim. kuvaus ja aukioloajat. _Lisätietoja alempana_ 
+- Käyttäjä näkee erilaisia liikuntaharrastuspaikkoja kartalla ja voi painaa tietyn palvelun kohdalta, jolloin hänelle näytetään enemmän tietoa. _Lisätietoja alempana_ 
 - Käyttäjä voi antaa arvioita sanallisesti ja tähdillä sekä lukea muiden antamia arvioita.
 - Ylläpitäjä voi lisätä ja poistaa palvelussa näytettäviä liikuntaharrastuspaikkoja ja määrittämään niistä näytettävät tiedot.
 - Käyttäjä voi etsiä liikuntaharrastuspaikkoja, joiden kuvauksessa tai nimessä esiintyy tietty sana.
