@@ -7,7 +7,7 @@ import places
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", places=stats.places_for_map())
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

@@ -6,6 +6,11 @@ def place_list():
     sql = "SELECT id, name FROM exerciseplaces ORDER BY id"
     return db.session.execute(text(sql)).fetchall()
 
+def places_for_map():
+    sql = "SELECT latitude, longitude, name, description FROM exerciseplaces"
+    place_info = db.session.execute(text(sql)).fetchall()
+    return {place[2]:list(place) for place in place_info}
+
 def place_rankings():
     sql = """SELECT p.id, p.name, COALESCE((SELECT AVG(stars) FROM reviews
             WHERE exerciseplaces_id=p.id), 0) r

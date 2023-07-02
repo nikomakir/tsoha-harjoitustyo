@@ -39,6 +39,26 @@ Katso <a href="/list">listana</a>.
         let map = new google.maps.Map(
             document.getElementById('map'), {zoom:11, center:MyCenter}
             )
+        var places = '{{ places|tojson }}'
+        var locations = JSON.parse(places)
+
+        var infowindow = new google.maps.infowindow()
+        var marker, i;
+
+        for (const [key, value] of Object.entries(locations)) {
+
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(locations[key][0], locations[key][1]),
+                map: map
+            })
+
+            google.maps.event.addListener(marker, 'mouseover', (function(marker, i) {
+                return function() {
+                    infowindow.setContent(locations[key][3]);
+                    infowindow.open(map, marker)
+                }
+            })(marker, i));
+        }
     }
     initMap()
 </script>
