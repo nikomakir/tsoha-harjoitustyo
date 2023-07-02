@@ -91,8 +91,3 @@ def get_groups(place_id):
             WHERE n.id=g.groupnames_id AND g.exerciseplaces_id=:place_id
             ORDER BY n.name"""
     return db.session.execute(text(sql), {"place_id":place_id}).fetchall()
-
-def remove_from_group(place_id, group_id):
-    sql = "DELETE FROM groups WHERE exerciseplaces_id=:place_id AND groupnames_id=:group_id"
-    db.session.execute(text(sql), {"place_id":place_id, "group_id":group_id})
-    db.session.commit()
