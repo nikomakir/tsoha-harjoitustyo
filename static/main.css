@@ -1,14 +1,14 @@
 body {
     margin: auto;
-    max-width: 45em;
+    max-width: 60em;
     font-family: Arial, Helvetica, sans-serif;
-    line-height: 1.5;
+    line-height: 2;
     padding: 4em 1em;
     color: #2b2a2a;
     background-color: rgb(247, 236, 206);
 }
 
-h2 {
+h2, h3 {
     margin-top: 1em;
     padding-top: 1em;
     color: #151515;
@@ -16,6 +16,14 @@ h2 {
 
 table {
     width: 80%;
+}
+
+td.hours {
+    text-align: center;
+}
+
+form input {
+    margin: auto 0;
 }
 
 #map {
